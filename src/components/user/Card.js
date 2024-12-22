@@ -9,6 +9,7 @@ import {
 } from "./Container";
 import { Text } from "./Text";
 import { Button } from "./Button";
+import Hoverable from "../../utils/HoverableElement";
 
 // Notice how CardTop and CardBottom do not specify the drag connector. This is because we won't be using these components as draggables; adding the drag handler would be pointless.
 
@@ -48,19 +49,19 @@ CardBottom.craft = {
 
 export const Card = ({ background, padding = 20 }) => {
   return (
-    <Container background={background} padding={padding}>
-      <Element id="text" is={CardTop} canvas>
-        {" "}
-        // Canvas Node of type CardTop
-        <Text text="Title" fontSize={20} />
-        <Text text="Subtitle" fontSize={15} />
-      </Element>
-      <Element id="buttons" is={CardBottom} canvas>
-        {" "}
-        // Canvas Node of type CardBottom
-        <Button size="small" text="Learn more" />
-      </Element>
-    </Container>
+    <Hoverable>
+      <Container background={background} padding={padding}>
+        <Element id="text" is={CardTop} canvas>
+          {" "}
+          <Text text="Title" fontSize={20} />
+          <Text text="Subtitle" fontSize={15} />
+        </Element>
+        <Element id="buttons" is={CardBottom} canvas>
+          {" "}
+          <Button size="small" text="Learn more" />
+        </Element>
+      </Container>
+    </Hoverable>
   );
 };
 

@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useNode } from "@craftjs/core";
 import ContentEditable from "react-contenteditable";
-import { FormControl, FormLabel, Slider } from "@mui/material";
+import { useNode } from "@craftjs/core";
+import Hoverable from "../../utils/HoverableElement";
 
 export const Text = ({ text, fontSize, textAlign }) => {
   const {
-    connectors: { connect, drag },
-    isActive,
     actions: { setProp },
+    isActive,
   } = useNode((node) => ({
     isActive: node.events.selected,
   }));
@@ -15,61 +14,36 @@ export const Text = ({ text, fontSize, textAlign }) => {
   const [editable, setEditable] = useState(false);
 
   useEffect(() => {
-    !isActive && setEditable(false);
+    if (!isActive) setEditable(false);
   }, [isActive]);
 
   return (
-    <div ref={(ref) => connect(drag(ref))} onClick={(e) => setEditable(true)}>
-      <ContentEditable
-        html={text}
-        onChange={(e) =>
-          setProp(
-            (props) =>
-              (props.text = e.target.value.replace(/<\/?[^>]+(>|$)/g, ""))
-          )
-        }
-        tagName="p"
-        style={{
-          fontSize: `${fontSize}px`,
-          textAlign,
-        }}
-      />
-    </div>
-  );
-};
-
-const TextSettings = () => {
-  const {
-    actions: { setProp },
-    fontSize,
-  } = useNode((node) => ({
-    fontSize: node.data.props.fontSize,
-  }));
-
-  return (
-    <>
-      <FormControl size="small" component="fieldset">
-        <FormLabel component="legend">Font size</FormLabel>
-        <Slider
-          value={fontSize || 7}
-          step={7}
-          min={1}
-          max={50}
-          onChange={(_, value) => {
-            setProp((props) => (props.fontSize = value));
+    <Hoverable>
+      <div onClick={() => setEditable(true)}>
+        <ContentEditable
+          html={text}
+          onChange={(e) =>
+            setProp(
+              (props) =>
+                (props.text = e.target.value.replace(/<\/?[^>]+(>|$)/g, ""))
+            )
+          }
+          tagName="p"
+          style={{
+            fontSize: `${fontSize}px`,
+            textAlign,
+            outline: "none",
           }}
         />
-      </FormControl>
-    </>
+      </div>
+    </Hoverable>
   );
 };
 
 Text.craft = {
   props: {
-    text: "Hi",
-    fontSize: 12,
-  },
-  related: {
-    settings: TextSettings,
+    text: "Hello, world!",
+    fontSize: 14,
+    textAlign: "left",
   },
 };

@@ -12,9 +12,10 @@ import { Editor, Element, Frame } from "@craftjs/core";
 import { Button } from "./components/user/Button";
 import { Text } from "./components/user/Text";
 import { JsonToComponentExample } from "./components/JsonRenderer";
+
 function App() {
   return (
-    <div style={{ margin: "0 auto", width: "800px" }}>
+    <div style={{ margin: "0 auto" }}>
       <Typography variant="h5" align="center">
         A super simple page editor
       </Typography>
@@ -31,7 +32,7 @@ function App() {
       >
         <Grid container spacing={3} style={{ paddingTop: "10px" }}>
           <Topbar />
-          <Grid item xs>
+          <Grid item xs className="brr">
             <Frame>
               <Element is={Container} padding={5} background="#eee" canvas>
                 <Card />

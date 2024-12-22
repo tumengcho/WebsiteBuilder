@@ -7,22 +7,27 @@ import {
   Radio,
   RadioGroup,
 } from "@mui/material";
-import { useNode } from "@craftjs/core";
+import { Element, useNode } from "@craftjs/core";
 import { Text } from "./Text";
+import Hoverable from "../../utils/HoverableElement";
 
 export const Button = ({ size, variant, color, text, children }) => {
   const {
     connectors: { connect, drag },
   } = useNode();
   return (
-    <MaterialButton
-      ref={(ref) => connect(drag(ref))}
-      size={size}
-      variant={variant}
-      color={color}
-    >
-      <Text text={text} />
-    </MaterialButton>
+    <Hoverable>
+      <MaterialButton
+        ref={(ref) => connect(drag(ref))}
+        size={size}
+        variant={variant}
+        color={color}
+      >
+        <Element is={Text} id="text-button" canvas>
+          <Text text={text} />
+        </Element>
+      </MaterialButton>
+    </Hoverable>
   );
 };
 

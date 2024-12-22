@@ -2,18 +2,21 @@ import { useNode } from "@craftjs/core";
 import { FormControl, FormLabel, Paper, Slider } from "@mui/material";
 import ColorPicker from "material-ui-color-picker";
 import React, { useEffect, useState } from "react";
+import Hoverable from "../../utils/HoverableElement";
 
 export const Container = ({ background, padding = 0, children }) => {
   const {
     connectors: { connect, drag },
   } = useNode();
   return (
-    <Paper
-      ref={(ref) => connect(drag(ref))}
-      style={{ backgroundColor: background, padding: `${padding}px` }}
-    >
-      {children}
-    </Paper>
+    <Hoverable>
+      <Paper
+        ref={(ref) => connect(drag(ref))}
+        style={{ backgroundColor: background, padding: `${padding}px` }}
+      >
+        {children}
+      </Paper>
+    </Hoverable>
   );
 };
 

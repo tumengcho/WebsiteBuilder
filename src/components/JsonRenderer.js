@@ -1,3 +1,4 @@
+import { Element } from "@craftjs/core";
 import { Button } from "./user/Button";
 import { Card } from "./user/Card";
 import { Container } from "./user/Container";
@@ -11,20 +12,32 @@ const renderNode = (nodeData) => {
   switch (type.resolvedName) {
     case "Container":
       return (
-        <Container {...props}>
-          {nodes && nodes.map((nodeId) => renderNode(data[nodeId]))}
-        </Container>
+        <Element is={Container} id="container">
+          <Container {...props}>
+            {nodes && nodes.map((nodeId) => renderNode(data[nodeId]))}
+          </Container>
+        </Element>
       );
     case "Card":
       return (
-        <Card {...props}>
-          {nodes && nodes.map((nodeId) => renderNode(data[nodeId]))}
-        </Card>
+        <Element is={Card} id="card">
+          <Card {...props}>
+            {nodes && nodes.map((nodeId) => renderNode(data[nodeId]))}
+          </Card>
+        </Element>
       );
     case "Button":
-      return <Button {...props} />;
+      return (
+        <Element is={Button} id="button">
+          <Button {...props} />
+        </Element>
+      );
     case "Text":
-      return <Text {...props} />;
+      return (
+        <Element is={Text} id="text">
+          <Text {...props} />
+        </Element>
+      );
     default:
       return null;
   }

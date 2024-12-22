@@ -2,3 +2,7 @@
   outline-color: lightskyblue;
   opacity: 0.8;
 }
+
+.hovered {
+  border: 1px dashed blue;
+}
