@@ -8,6 +8,7 @@ import {
   TextField,
   Snackbar,
 } from "@mui/material";
+import { FaSave } from "react-icons/fa";
 
 export const SaveComponent = ({ componentJSON }) => {
   const [openDialog, setOpenDialog] = useState(false);
@@ -42,9 +43,18 @@ export const SaveComponent = ({ componentJSON }) => {
 
   return (
     <>
-      <Button variant="contained" color="primary" onClick={handleOpenDialog}>
-        Save Component
-      </Button>
+      <button
+        onClick={handleOpenDialog}
+        style={{
+          background: "transparent",
+          border: "none",
+          cursor: "pointer",
+          color: "white",
+          fontSize: "16px",
+        }}
+      >
+        <FaSave />
+      </button>
 
       <Dialog open={openDialog} onClose={handleCloseDialog}>
         <DialogTitle>Save Component</DialogTitle>
