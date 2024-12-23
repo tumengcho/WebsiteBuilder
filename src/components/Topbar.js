@@ -48,6 +48,7 @@ export const Topbar = () => {
             onClick={() => {
               const json = query.serialize();
               copy(lz.encodeBase64(lz.compress(json)));
+              localStorage.setItem("component", json);
               setSnackbarMessage("State copied to clipboard");
               console.log(query.serialize());
             }}

@@ -5,10 +5,19 @@ import { Button } from "./user/Button";
 import { Text } from "./user/Text";
 import { Card } from "./user/Card";
 import { Container } from "./user/Container";
-import { JsonToComponentExample } from "./JsonRenderer";
+import {
+  ComponentCustom,
+  DynamicComponentCustom,
+  withDynamicDisplayName,
+} from "./JsonRenderer";
 
 export const Toolbox = () => {
   const { connectors, query, actions } = useEditor();
+  const savedComponents =
+    JSON.parse(localStorage.getItem("savedComponents")) || [];
+
+  console.log(savedComponents);
+
   return (
     <Box px={2} py={2}>
       <Grid
@@ -63,19 +72,22 @@ export const Toolbox = () => {
             Card
           </MaterialButton>
         </Grid>
-        <Grid container direction="column" item>
-          <MaterialButton
-            ref={(ref) =>
-              connectors.create(
-                ref,
-                <JsonToComponentExample></JsonToComponentExample>
-              )
-            }
-            variant="contained"
-          >
-            Custom
-          </MaterialButton>
-        </Grid>
+        {savedComponents.map((componentJSON, index) => {
+          const componentData = componentJSON;
+
+          return (
+            <Grid container direction="column" item key={index}>
+              <MaterialButton
+                ref={(ref) =>
+                  connectors.create(ref, <ComponentCustom f={componentData} />)
+                }
+                variant="contained"
+              >
+                {componentData.displayName}
+              </MaterialButton>
+            </Grid>
+          );
+        })}
       </Grid>
     </Box>
   );

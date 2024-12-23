@@ -1,8 +1,9 @@
 import React from "react";
 import { useEditor, useNode } from "@craftjs/core";
-import { FaTrashAlt, FaEdit } from "react-icons/fa";
+import { FaTrashAlt, FaEdit, FaSave } from "react-icons/fa";
+import { SaveComponent } from "./SaveComponent";
 
-const Hoverable = ({ children }) => {
+const Hoverable = ({ children, displayName }) => {
   const {
     connectors: { connect, drag },
     isHovered,
@@ -11,10 +12,10 @@ const Hoverable = ({ children }) => {
   } = useNode((node) => ({
     isHovered: node.events.hovered,
     isActive: node.events.selected,
-    nodeName: node.data.displayName || node.data.type.name,
+    nodeName: node.data.custom?.displayName || node.data.type.name,
   }));
 
-  const { actions, selected } = useEditor((state, query) => {
+  const { actions, selected, query } = useEditor((state, query) => {
     const [currentNodeId] = state.events.hovered;
     let selected;
 
@@ -42,6 +43,11 @@ const Hoverable = ({ children }) => {
     console.log("Rename action triggered!");
   };
 
+  const handleSave = () => {
+    const nodeTree = query.node(selected.id).toSerializedNode();
+    return nodeTree;
+  };
+
   return (
     <div
       ref={(ref) => connect(drag(ref))}
@@ -62,7 +68,7 @@ const Hoverable = ({ children }) => {
             textAlign: "center",
             fontWeight: "bold",
             backgroundColor: "blue",
-            padding: "5px",
+            padding: "14px 5px",
             borderRadius: "5px",
             display: "flex",
             flexDirection: "row",
@@ -71,7 +77,7 @@ const Hoverable = ({ children }) => {
           }}
         >
           <span>{nodeName}</span>
-          <div>
+          <div style={{ display: "flex", flexDirection: "row" }}>
             <button
               onClick={handleDelete}
               disabled={!selected.isDeletable}
@@ -97,6 +103,7 @@ const Hoverable = ({ children }) => {
             >
               <FaEdit />
             </button>
+            <SaveComponent componentJSON={handleSave()} />;
           </div>
         </span>
       )}

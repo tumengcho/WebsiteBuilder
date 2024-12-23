@@ -39,7 +39,6 @@ export const Text = ({ text, fontSize, textAlign }) => {
     </Hoverable>
   );
 };
-
 Text.craft = {
   props: {
     text: "Hello, world!",

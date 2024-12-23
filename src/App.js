@@ -11,7 +11,10 @@ import { Grid, Paper, Typography } from "@mui/material";
 import { Editor, Element, Frame } from "@craftjs/core";
 import { Button } from "./components/user/Button";
 import { Text } from "./components/user/Text";
-import { JsonToComponentExample } from "./components/JsonRenderer";
+import {
+  ComponentCustom,
+  JsonToComponentExample,
+} from "./components/JsonRenderer";
 
 function App() {
   return (
@@ -27,7 +30,7 @@ function App() {
           Container,
           CardTop,
           CardBottom,
-          JsonToComponentExample,
+          ComponentCustom,
         }}
       >
         <Grid container spacing={3} style={{ paddingTop: "10px" }}>
